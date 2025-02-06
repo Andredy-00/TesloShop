@@ -1,5 +1,6 @@
 "use client";
 
+import { useUIStore } from "@/components/store";
 import Link from "next/link";
 import {
   IoCloseOutline,
@@ -13,6 +14,9 @@ import {
 } from "react-icons/io5";
 
 export const Sidebar = () => {
+
+    const isSideMenuOpen = useUIStore();    
+
   return (
     <div>
       {/* Background Black */}
