@@ -1,7 +1,6 @@
 import { ProductGrid, Title } from "@/components";
 import { Category } from "@/components/interfaces";
 import { initialData } from "@/seed/seed";
-import { notFound } from "next/navigation";
 
 const seedProducts = initialData.products;
 
@@ -11,7 +10,7 @@ interface Props {
   }
 }
 
-export default function( { params }: Props ) {
+export default function CategoryIdPage( { params }: Props ) {
 
   const {id} = params;
   const products = seedProducts.filter( product => product.gender === id);
