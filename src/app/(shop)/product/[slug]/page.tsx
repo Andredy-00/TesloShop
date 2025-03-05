@@ -3,14 +3,15 @@ import { titleFont } from "@/config/fonts";
 import { initialData } from "@/seed/seed";
 import { notFound } from "next/navigation";
 
-interface Props {
-  params: {
+interface PageProps {
+  params: Promise<{
     slug: string;
-  };
+  }>;
 }
 
-export default function ProductPage ({ params }: Props) {
-  const { slug } = params;
+export default async function ProductPage({ params }: PageProps) {
+  const resolvedParams = await params;
+  const { slug } = resolvedParams;
   const product = initialData.products.find((product) => product.slug === slug);
 
   if (!product) {
@@ -45,7 +46,7 @@ export default function ProductPage ({ params }: Props) {
           quantity={2}
         />
 
-        {/* Boton de*/}
+        {/* Boton de */}
         <button className="btn-primary my-5">Agregar al carrito</button>
 
         {/* Descripcion */}

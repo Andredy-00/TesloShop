@@ -4,39 +4,37 @@ import { initialData } from "@/seed/seed";
 
 const seedProducts = initialData.products;
 
-interface Props {
-  params: {
-      id: Category;
-  }
+interface PageProps {
+  params: Promise<{
+    id: Category;
+  }>;
 }
 
-export default function CategoryIdPage( { params }: Props ) {
+export default async function CategoryIdPage({ params }: PageProps) {
+  const resolvedParams = await params;
+  const { id } = resolvedParams;
 
-  const {id} = params;
-  const products = seedProducts.filter( product => product.gender === id);
+  if (!["men", "women", "kid", "unisex"].includes(id)) {
+    return <div>Error: Invalid Category</div>;
+  }
+
+  const products = seedProducts.filter(product => product.gender === id);
 
   const labels: Record<Category, string> = {
-    'men': 'Hombres',
-    'women': 'Mujeres',
-    'kid': 'Niños',
-    'unisex': 'Unisex'
-  }
+    men: "Hombres",
+    women: "Mujeres",
+    kid: "Niños",
+    unisex: "Unisex"
+  };
 
- /*  if (id === 'kids'){
-    notFound();
-  } */
-
-    return (
-      <>
-         <Title
-           title={`Articulos para ${labels[id]}`}
-           subtiitle="Todos los productos"
-           className="mb-2"
-         />
-     
-         <ProductGrid products={products} />
-     
-        </>
-    );
-  }
-  
+  return (
+    <>
+      <Title
+        title={`Artículos para ${labels[id as Category]}`}
+        subtiitle="Todos los productos"
+        className="mb-2"
+      />
+      <ProductGrid products={products} />
+    </>
+  );
+}
